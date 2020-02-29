@@ -1,0 +1,154 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <div class="mat-card-design" fxLayout="column" fxFlex="25">
+    <!-- style="background-color: rgb(182, 178, 178);" -->
+    <mat-card style="background-color: #f0f0f0" class="contract-design">
+      <mat-card-header>
+        <mat-card-title>Operator A</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngFor="let contract of contracts">
+          <mat-card mat-ripple style="background-color: #f0f0f0;">
+            <mat-card-content>
+              <div layout="row">
+                <div class="info-display-left">
+                  <p class="dataCSS">ISD Code :</p>
+                </div>
+                <div class="info-display-right">
+                  <p class="dataCSS">{{ contract.isd_code }}</p>
+                </div>
+              </div>
+              <div layout="row">
+                <div class="info-display-left">
+                  <p class="dataCSS">ISP Mapping :</p>
+                </div>
+                <div class="info-display-right">
+                  <p class="dataCSS">{{ contract.isp_mapping }}</p>
+                </div>
+              </div>
+              <div layout="row">
+                <div class="info-display-left">
+                  <p class="dataCSS">Agreement ID :</p>
+                </div>
+                <div class="info-display-right">
+                  <!-- <button class="button-class" (click)="checkAgreement()">
+                        {{ contract.agreement_id }}
+                      </button> -->
+
+                  <a
+                    role="button"
+                    (click)="checkAgreement()"
+                    class="dataCSS1"
+                    >{{ contract.agreement_id }}</a
+                  >
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="mat-card-design" fxLayout="column" fxFlex="25">
+    <div id="showMe" class="w3-animate-left">
+      <mat-card>
+        <div *ngFor="let agreement of agreements">
+          <mat-card class="sub-contract-design">
+            <mat-card-header>
+              <mat-card-title class="example-icon1">{{
+                agreement.agreement_id
+              }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <mat-card mat-ripple style="background-color: #f0f0f0;">
+                <mat-card-content>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">Agreement ID :</p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.agreement_id }}
+                      </p>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">Origin ISP Agreement:</p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.origin_agreed }}
+                      </p>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">Destination ISP Agreement:</p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.destination_agreed }}
+                      </p>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">Premium Rates per minute:</p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.ratingforHigh }}
+                      </p>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">Standard Rates per minute:</p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.ratingforMedium }}
+                      </p>
+                    </div>
+                  </div>
+                  <div layout="row">
+                    <div class="info-display-left">
+                      <p class="dataCSSagreement">
+                        Discounted Rates per minute:
+                      </p>
+                    </div>
+                    <div class="info-display-right">
+                      <p class="dataCSSagreement">
+                        {{ agreement.ratingforLow }}
+                      </p>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div
+    *ngIf="submitEnabled"
+    class="mat-card-design"
+    fxLayout="column"
+    fxFlex="50"
+  >
+    <mat-card class="table-design">
+      <app-summarized-data></app-summarized-data>
+    </mat-card>
+  </div>
+
+  <!-- <div *ngIf="!submitEnabled">
+    <div class="mat-card-design" fxFlex="69%">
+      <mat-card mat-ripple class="table-design"> </mat-card>
+    </div>
+  </div> -->
+</div>

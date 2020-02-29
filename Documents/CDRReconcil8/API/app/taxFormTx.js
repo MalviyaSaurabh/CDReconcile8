@@ -1,0 +1,705 @@
+
+'use strict';
+var path = require('path');
+var helper = require('./helper.js');
+var logger = helper.getLogger('taxFormTx');
+var invoke = require('./invoke-transaction.js');
+const request = require('request-promise');
+var https = require('https');
+
+//const mime = require('mime-types');
+//const crypto = require('crypto');
+
+var fs = require("fs");
+const uuidv4 = require('uuid/v4');
+//const base64 = require('base-64')
+
+
+var taxForm = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+   // logger.debug(">>> taxForm() ...");
+    res.set('Content-Type', 'application/json');
+	// res.set('Accept', 'application/json');
+	
+	
+ // **** To get file from local filesystem *********************************
+	
+	
+	//let imageName = args.doc.docName
+	
+	//var bitmap = fs.readFileSync( __dirname + '/../uploads/'+imageName);
+    // convert binary data to base64 encoded string
+   // var pdf_encode = new Buffer(bitmap).toString('base64');
+	//args.doc.docData = pdf_encode
+	//console.log(args.doc.docData)
+	
+	
+//**************************************************************************	
+	
+	//*******************************************
+	
+	//args.taxDocId = uuidv4().toString();
+	//args.doc.docID = uuidv4().toString();
+	//args.accDoc.docID = uuidv4().toString();
+	
+	
+	//*********************************
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.taxDocId);
+	 jsonArr.push(args.taxType);
+	 jsonArr.push(args.taxState);
+	 jsonArr.push(args.taxCountry);
+	 jsonArr.push(args.taxJurisdiction);
+	 jsonArr.push(args.effectDate);
+	 jsonArr.push(args.expDate);
+	 jsonArr.push(args.createDate);
+	 jsonArr.push(args.updateDate);
+	 jsonArr.push(args.docStatus);
+	 jsonArr.push(args.docOwner);
+	 jsonArr.push(args.docIssuerComp);
+	 jsonArr.push(args.partner);
+	 jsonArr.push(args.partnerApprover);
+	 jsonArr.push(args.expReminder);
+	 jsonArr.push(args.certExempType);
+	 jsonArr.push(args.certName);
+	 jsonArr.push(JSON.stringify(args.accountList));
+	 jsonArr.push(JSON.stringify(args.doc));
+	 jsonArr.push(JSON.stringify(args.accDoc));
+	 jsonArr.push(args.comments);
+	 jsonArr.push(args.formName);
+	 
+	 //console.log(jsonArr);
+	
+	//***************************************
+	
+   
+   
+   
+ // ***************** To encrypt base-64 string ***************************  
+ 
+	//let base64Image = item.docImage
+   // item.docOwner = username;
+   // item.aesKey = crypto.randomBytes(32).toString('base64');
+    //item.docImage = helper.encrypt(base64Image, item.aesKey);
+ //**************************************************************************
+
+ 
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data ; 
+	try {
+	 data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	}	
+	catch(err){
+		console.log(err);
+		//let errString = JSON.stringify(err);
+		data = {
+			"status":"500",
+			"message":err
+		};
+		data = JSON.stringify(data);
+	}
+    if (data) {	
+	let result;
+	//	let result = data
+	try {
+		result = JSON.parse(data);
+	}
+	catch(error) {
+		result = {
+                        "status":"200",
+                        "message":data
+                };
+	}	
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	 // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    
+}
+
+var account = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	
+	//args.acctId = uuidv4().toString();
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.acctId);
+	 jsonArr.push(args.ban);
+	 jsonArr.push(args.acctStatus);
+	 jsonArr.push(args.billName);
+	 jsonArr.push(args.acna);
+	 jsonArr.push(args.aecn);
+	 jsonArr.push(args.rsId);
+	 jsonArr.push(args.naspId);
+	 jsonArr.push(args.can);
+	 jsonArr.push(args.state);
+	 jsonArr.push(args.area);
+	 jsonArr.push(args.billingSys);
+	 jsonArr.push(args.prodGrpName);
+	 jsonArr.push(args.srvcTyp);
+	 jsonArr.push(args.lob);
+	 jsonArr.push(args.lobDesc);
+	 jsonArr.push(args.segment);
+	 jsonArr.push(args.creationDate);
+	 jsonArr.push(args.updateDate);
+	 jsonArr.push(args.taxExemptAcctType);
+	 jsonArr.push(args.taxExemptAcctVal);
+	 jsonArr.push(args.prtnr.prtnrId);
+	 jsonArr.push(args.prtnr.prtnrCode);
+	 jsonArr.push(args.prtnr.prtnrName);
+	 jsonArr.push(args.prtnr.fmGrp.fgId);
+	 jsonArr.push(args.prtnr.fmGrp.fgCode);
+	 jsonArr.push(args.prtnr.fmGrp.fgName); 
+	  jsonArr.push(args.verizonLegalEntity);
+	 
+	 let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+       // let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+}
+
+var invoice = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.billId);
+	 jsonArr.push(args.billNum);
+	 jsonArr.push(args.accountBAN);
+	 jsonArr.push(args.invoiceBAN);
+	 jsonArr.push(args.billDate);
+	 jsonArr.push(args.billingSys);
+	 jsonArr.push(args.totCurrCharges);
+	 jsonArr.push(args.numOfCkts);
+	 jsonArr.push(args.numOfOCCs);
+	 jsonArr.push(args.totTaxCharges);
+	 jsonArr.push(args.totSurcharges);
+	 jsonArr.push(args.totLPCCharges);
+	 jsonArr.push(args.totUsageCharges);
+	 jsonArr.push(args.totMonthlyCharges);
+	 jsonArr.push(args.totOCCCharges);
+	 jsonArr.push(args.totAmountDue);
+	 jsonArr.push(args.totBalanceDue);
+	 jsonArr.push(args.totDebitAdj);
+	 jsonArr.push(args.totAdj);
+	 jsonArr.push(args.totPayment);
+	 jsonArr.push(args.typeOfBill);
+	 jsonArr.push(JSON.stringify(args.taxSurList));
+	 
+	 let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+        //let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+}
+
+
+var claim = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	
+	//args.batchID = uuidv4().toString();
+	//args.claimList.claimDate  = parseInt("10/04/2019");
+	let jsonArr = [];
+	 
+	 jsonArr.push(JSON.stringify(args.claimDtls));
+	 jsonArr.push(args.claimDate);
+	 jsonArr.push(args.prtnrName);
+	 jsonArr.push(args.submittedByVZ);
+	 jsonArr.push(args.batchID);
+	 jsonArr.push(args.fileName);
+	 jsonArr.push(args.claimsExcel);
+	 
+	// args.claimList.claimDate  = parseInt(args.claimList.claimDate);
+	 console.log(jsonArr);
+	
+	let data; 
+	try {
+	 	data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 }
+	catch(err) {
+		data = {
+			"status": "500",
+			"message": err
+		}
+	}
+	 
+	 if (data) {	
+		
+        	return data;	
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+       // return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+} 
+
+
+///-----------------------
+
+var taxCertOnFile = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.identity);
+	 jsonArr.push(args.cetType);
+	 jsonArr.push(args.cetRefId);
+	 jsonArr.push(args.accountID);
+	 jsonArr.push(args.wacna);
+	 jsonArr.push(args.accountName);
+	 jsonArr.push(args.acctType);
+	 jsonArr.push(args.legalEntityCd);
+	 jsonArr.push(args.legalEntityDesc);
+	 jsonArr.push(args.companyCd);
+	 jsonArr.push(args.state);
+	 jsonArr.push(args.visionAccountID);
+	 jsonArr.push(args.billingSystem);
+	 jsonArr.push(args.fipsGeocode);
+	 jsonArr.push(args.providerCd);
+	 jsonArr.push(args.igoTicket);
+	 jsonArr.push(args.certID);
+	 jsonArr.push(args.startDt);
+	 jsonArr.push(args.endDt);
+	 jsonArr.push(args.cetStartDt);
+	 jsonArr.push(args.cetEndDt);
+	 
+	 
+	 let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+        //let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+}
+
+// Approve Tax Form -------------------
+
+var approveTaxForm = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.taxDocId);
+	 jsonArr.push(args.docStatus);
+	 jsonArr.push(args.partnerApprover);
+	 jsonArr.push(args.updateDate);
+	 
+	 
+	 console.log("Aprrove TAx FOrm argument ********"+jsonArr);
+	
+	//***************************************
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data ; 
+	try {
+	 data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	}	
+	catch(err){
+		console.log(err);
+		//let errString = JSON.stringify(err);
+		data = {
+			"status":"500",
+			"message":err
+		};
+		data = JSON.stringify(data);
+	}
+    if (data) {	
+	let result;
+	//	let result = data
+	try {
+		result = JSON.parse(data);
+	}
+	catch(error) {
+		result = {
+                        "status":"200",
+                        "message":data
+                };
+	}	
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	
+}
+
+// Delete  Tax Form -------------------
+
+var deleteTaxForm = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.queryString);
+	 jsonArr.push(args.docType);
+	 
+	 
+	 console.log("Delete TAX FOrm argument ********"+jsonArr);
+	
+	//***************************************
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data ; 
+	try {
+	 data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	}	
+	catch(err){
+		console.log(err);
+		//let errString = JSON.stringify(err);
+		data = {
+			"status":"500",
+			"message":err
+		};
+		data = JSON.stringify(data);
+	}
+    if (data) {	
+	let result;
+	//	let result = data
+	try {
+		result = JSON.parse(data);
+	}
+	catch(error) {
+		result = {
+                        "status":"200",
+                        "message": "Record Deleted Successfully"
+                };
+	}	
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	
+}
+
+// Update Claims Resolution -------------------
+
+var updateClaims = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.assetType);
+	 jsonArr.push(JSON.stringify(args.claimsUpdateDtls));
+	// jsonArr.push(args.updatedBy);
+	 //jsonArr.push(args.claimStatus);
+	 //jsonArr.push(args.totalApprovedAmount);
+	 //jsonArr.push(args.totalDeniedAmount);
+	 //jsonArr.push(args.updateReason);
+	 
+	 
+	 console.log("Update Claims Resolution argument ********"+jsonArr);
+	
+	//***************************************
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data ; 
+	try {
+	 data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	}	
+	catch(err){
+		console.log(err);
+		//let errString = JSON.stringify(err);
+		data = {
+			"status":"500",
+			"message":err
+		};
+		data = JSON.stringify(data);
+	}
+    if (data) {	
+	let result;
+	//	let result = data
+	try {
+		result = JSON.parse(data);
+	}
+	catch(error) {
+		result = {
+                        "status":"200",
+                        "message":data
+                };
+	}	
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	
+}
+//Update Tax Form with FormName field ***************************
+
+
+var updateTaxForm = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.assetType);
+	 jsonArr.push(JSON.stringify(args.taxFormUpdateDtls));
+	// jsonArr.push(args.updatedBy);
+	 //jsonArr.push(args.claimStatus);
+	 //jsonArr.push(args.totalApprovedAmount);
+	 //jsonArr.push(args.totalDeniedAmount);
+	 //jsonArr.push(args.updateReason);
+	 
+	 
+	 console.log("Update Claims Resolution argument ********"+jsonArr);
+	
+	//***************************************
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data ; 
+	try {
+	 data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	}	
+	catch(err){
+		console.log(err);
+		//let errString = JSON.stringify(err);
+		data = {
+			"status":"500",
+			"message":err
+		};
+		data = JSON.stringify(data);
+	}
+    if (data) {	
+	let result;
+	//	let result = data
+	try {
+		result = JSON.parse(data);
+	}
+	catch(error) {
+		result = {
+                        "status":"200",
+                        "message":data
+                };
+	}	
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	
+}
+
+
+
+// To get Access Token for Tax Form Image download from VZ side 
+
+var accessToken = async function (args,grant_type){
+	
+	var options = {
+    "url": "https://api-uat.verizon.com/oauth/client_credential/accesstoken?grant_type="+grant_type,
+    "headers": {
+        "contentType": "application/x-www-form-urlencoded"
+    },
+	"form":{ 
+			client_id:'kHKG0FaPFmsSzWJSD8zjiiXVqvM5AFMp',
+			client_secret:'LgVoc2VyoRAva8YW'
+			},
+};
+logger.debug(options);
+
+   // request.post(options,function(error, response,body){
+	   
+		// console.log(response.statusCode);
+	// if (!error && response.statusCode == 200) {
+		// console.log(body);
+    // var data = JSON.parse(response.body);
+    // console.log(data);
+ // }
+ 
+	// var access_token = data.access_token;
+	// console.log('Access Token : '+ access_token);
+	
+// });
+
+ try{
+              return new Promise((resolve, reject) => {
+
+                       request.post(options,function(error, response,body) {
+                      
+                                    if (error) {
+                                              resolve({
+                                                        "status": error.statusCode,
+                                                        "message": error.reason
+                                              })
+                                              //console.log(err)
+                                             }
+                                    else {
+
+                                            if (!body) {
+                                                body = {};
+                                            }
+                                        
+                                            if(body){
+                                               var data = JSON.parse(response.body);
+                                            }
+                                            var access_token = data.access_token;
+											console.log ('Access Token : '+access_token);
+											resolve(access_token);
+                                        }
+                            });
+                  });
+               }
+               catch (error) {
+
+                let response = {
+                    "status": error.statusCode,
+                    "message": error.reason
+                };
+                return response;
+            }
+
+}
+//To get Tax Form Image from VZ Enterprise system 
+
+var taxformImage = async function (args,access_token) {
+	
+	console.log ('$$$$$$$ Fetch TAX FORM Image in base64 string format --- $$$$$$$$$')
+	
+	
+	
+	//var keyFile = path.join(__dirname, '../ssl/private_key');
+	//var certFile = path.join(__dirname, '../ssl/wkdv-blockchain-disputemgmnt-proxy_ebiz_verizon_com-chain.pem');
+	var pfxFile = path.join(__dirname, '../ssl/wkdv-blockchain-disputemgmnt-proxy_ebiz_verizon_com-cert.pkcs12');
+	
+	console.log(pfxFile);
+	
+
+	var options = {
+    "url": "https://api-secure-uat.verizon.com:443/wkdv-blockchain-disputemgmnt-proxy",
+	//"key": fs.readFileSync(keyFile), 
+   // "cert": fs.readFileSync(certFile),
+	"pfx": fs.readFileSync(pfxFile),
+	"passphrase": "VzCtl1234*",
+	 "method": "POST",
+	 "json": true,
+    "headers": {
+        "contentType": "application/json",
+		"cache-control": "no-cache",
+		"apikey":"kHKG0FaPFmsSzWJSD8zjiiXVqvM5AFMp",
+		"postman-token":"09121efd-9b19-ef7c-e268-9c5305e046bb",
+		"authorization":"Bearer "+access_token
+			
+    },
+	
+	"body":args ,
+};
+logger.debug(options);
+try{
+              return new Promise((resolve, reject) => {
+
+                       request.post(options,function(error, response,body) {
+                      
+                                    if (error) {
+											
+                                               resolve({
+                                                        "status": error.statusCode,
+                                                        "message": error.reason
+                                              })
+                                              console.log(error);
+                                             } 
+                                    else {
+											
+											console.log(response.body.ExemptionDoc);
+                                            if ( response.body.ExemptionDoc !== undefined && Object.values(response.body.ExemptionDoc).length === 0) {
+                                             //body = {};
+											 var data = response.body;
+											// console.log(response.body);
+											 resolve({
+												"status": "500",
+												"data": {"message":"VZ Side Node Down !"}
+											});
+											
+                                            }
+                                        
+                                            else{
+												
+												
+                                               
+											     var data = response.body
+												 	// console.log(response.body);
+											
+											}
+											 
+											resolve({
+												"status": response.statusCode,
+												"data": data
+											});
+											
+											
+                                        }
+                            });
+                  });
+}
+               catch (error) {
+					
+                let response = {
+                    "status": error.statusCode,
+                    "message": error.reason
+                };
+                return response;
+            }
+}
+              
+
+
+
+exports.taxForm = taxForm;
+exports.account=account;
+exports.invoice=invoice;
+exports.claim=claim;
+exports.taxCertOnFile=taxCertOnFile;
+exports.approveTaxForm=approveTaxForm;
+exports.deleteTaxForm=deleteTaxForm;
+exports.updateClaims=updateClaims;
+exports.accessToken = accessToken;
+exports.taxformImage = taxformImage;
+exports.updateTaxForm= updateTaxForm;

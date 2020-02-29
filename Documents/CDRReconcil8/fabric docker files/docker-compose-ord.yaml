@@ -1,0 +1,30 @@
+version: '2'
+
+networks:
+  byfn:
+
+services:
+
+  ord0.ispa.com:
+    extends:
+      file:   base/docker-compose-base-ord.yaml
+      service: ord0.ispa.com
+    container_name: ord0.ispa.com
+    networks:
+      - byfn
+
+  ord1.ispa.com:
+    extends:
+      file:   base/docker-compose-base-ord.yaml
+      service: ord1.ispa.com
+    container_name: ord1.ispa.com
+    networks:
+      - byfn
+
+  ord2.ispa.com:
+    extends:
+      file:   base/docker-compose-base-ord.yaml
+      service: ord2.ispa.com
+    container_name: ord2.ispa.com
+    networks:
+      - byfn

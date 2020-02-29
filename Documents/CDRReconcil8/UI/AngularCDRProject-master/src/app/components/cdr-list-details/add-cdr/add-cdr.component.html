@@ -1,0 +1,62 @@
+<div fxFlex="row">
+  <div layout="row">
+    <mat-card>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle>Upload CDR</mat-card-subtitle>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div layout="row">
+          <mat-form-field
+            tdFileDrop
+            [disabled]="disabled"
+            (fileDrop)="file = $event"
+            (click)="fileInput.inputElement.click()"
+            (keyup.enter)="fileInput.inputElement.click()"
+            (keyup.delete)="fileInput.clear()"
+            (keyup.backspace)="fileInput.clear()"
+            flex
+          >
+            <input
+              matInput
+              placeholder="select or drop file"
+              [value]="file?.name ? file?.name : null"
+              [disabled]="disabled"
+              readonly
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            *ngIf="file"
+            (click)="fileInput.clear()"
+            (keyup.enter)="fileInput.clear()"
+          >
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <td-file-input
+            class="push-left-sm push-right-sm"
+            #fileInput
+            [(ngModel)]="file"
+            [ngModelOptions]="{ standalone: true }"
+            [disabled]="disabled"
+            accept=".xlxs,.xls"
+          >
+            <mat-icon>folder</mat-icon>
+            <span class="text-upper">Browse...</span>
+          </td-file-input>
+        </div>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div fxLayout="row" fxFlex="100">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50"></div>
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50">
+            <button (click)="cancel()" mat-button color="accent">CANCEL</button>
+            <button (click)="uploadFileToActivity()" mat-button color="accent">
+              SUBMIT
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

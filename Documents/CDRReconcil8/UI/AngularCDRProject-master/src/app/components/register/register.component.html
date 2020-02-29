@@ -1,0 +1,96 @@
+<div layout-padding flex>
+  <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+    <div flex-gt-xs="50">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <input type="hidden" name="auth_mode" value="BASIC" />
+        <mat-card>
+          <mat-card-title style="color: grey;" fxLayoutAlign="center center"
+            >Register Operator</mat-card-title
+          >
+
+          <mat-card-content>
+            <div layout="row">
+              <mat-form-field flex>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="operatorName"
+                  class="text-input"
+                  placeholder="Operator Name"
+                  autocomplete="off"
+                  required
+                  autofocus
+                />
+                <mat-error *ngIf="operatorNameControl.hasError('required')">
+                  {{
+                    operatorNameControl.getError("requiredMessage")
+                  }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div layout="row">
+              <mat-form-field flex>
+                <input
+                  matInput
+                  formControlName="country"
+                  class="text-input"
+                  type="text"
+                  placeholder="Client Country"
+                  autocomplete="off"
+                  required
+                />
+                <mat-error *ngIf="countryControl.hasError('required')">
+                  {{ countryControl.getError("requiredMessage") }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div layout="row">
+              <mat-form-field flex>
+                <input
+                  matInput
+                  formControlName="rate"
+                  class="text-input"
+                  type="text"
+                  placeholder="Client ISD Code"
+                  autocomplete="off"
+                  required
+                />
+                <mat-error *ngIf="rateControl.hasError('required')">
+                  {{ rateControl.getError("requiredMessage") }}</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div fxLayout="row" layout-align="end center" flex="100">
+              <!-- <mat-checkbox [(formControl)]="rememberMeControl" name="rememberMe">Remember me</mat-checkbox> -->
+              <button
+                type="submit"
+                [disabled]="
+                  !(
+                    countryControl.valid &&
+                    rateControl.valid &&
+                    operatorNameControl.valid
+                  )
+                "
+                mat-button
+                color="accent"
+              >
+                Register
+              </button>
+              <button
+                type="button"
+                [routerLink]="['/login']"
+                mat-button
+                color="primary"
+              >
+                Cancel
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+</div>

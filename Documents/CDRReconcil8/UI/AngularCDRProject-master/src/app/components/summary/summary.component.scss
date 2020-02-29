@@ -1,0 +1,90 @@
+.contract-design {
+  // width: 25em;
+  height: 34em;
+  border: grey;
+  //margin-right: 5px;
+  // margin-left: 5px;
+}
+
+.example-icon1 {
+  text-transform: uppercase;
+  font-size: 2em;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #999;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+
+  border: none;
+  background: none;
+}
+
+.sub-contract-design {
+  //width: 22em;
+
+  border: #f0f0f0;
+  // margin-right: 5px;
+  //  margin-left: 5px;
+}
+.table-design {
+  // width: 40em;
+  height: 34em;
+  border: grey;
+  // margin-left: 5px;
+  overflow: auto;
+}
+.info-display-left {
+  display: inline;
+  min-width: 50%;
+  text-align: left;
+  color: #69ad00;
+}
+
+#showMe {
+  animation: cssAnimation 0s 2s forwards;
+  visibility: hidden;
+  transform: ScaleX(1.05);
+  transition: transform 0.3s ease-in-out;
+  height: 34em;
+
+  color: #ecdbdbd5;
+}
+
+@keyframes cssAnimation {
+  to {
+    visibility: visible;
+  }
+}
+
+.dataCSSagreement {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  float: left;
+  margin: 0;
+}
+
+a:link {
+  display: block;
+  font-size: 1em;
+  outline: thin solid;
+  color: #4e6827;
+}
+a:hover {
+  display: block;
+  font-size: 1.1em;
+  //outline: thin solid;
+  color: #4e6827;
+}
+
+.mat-card-design {
+  color: #ecdbdbd5;
+  height: 34em;
+}
+
+.button-class {
+  background: transparent;
+  border: none !important;
+}

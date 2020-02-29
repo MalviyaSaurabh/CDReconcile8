@@ -1,0 +1,101 @@
+<div
+  layout="column"
+  style="height:100%;background-image: url('https://www.tokendesk.io/wp-content/uploads/2018/11/Blockchain-Background.jpg');"
+>
+  <mat-toolbar
+    [ngClass]="{ toolbar: true }"
+    class="md-medium-tall"
+    style="background-color:#181818;margin-bottom: 50px;"
+  >
+    <!-- <div style="background-color:#181818"><img src="../../../assets/icons/logo.png" class="center"></div> -->
+    <div fxLayout="column" fxLayoutAlign="flex-end" fxFlex>
+      <span class="title-center title-font">CDReConcil&#8734;</span>
+    </div> </mat-toolbar
+  ><br />
+  <div layout-padding flex>
+    <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+      <div flex-gt-xs="50">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <input type="hidden" name="auth_mode" value="BASIC" />
+          <mat-card>
+            <mat-card-title style="color: grey;" fxLayoutAlign="center center"
+              >Login</mat-card-title
+            >
+
+            <div layout="row" *ngIf="authFailed">
+              <mat-card
+                class="authFailureBlockContainer"
+                flex-gt-xs="100"
+                fxLayoutAlign="center center"
+              >
+                <mat-card-content>
+                  <span class="authFailureMessage">
+                    {{ authFailureMessage }}
+                  </span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <div layout="row">
+                <mat-form-field flex>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="username"
+                    class="text-input"
+                    placeholder="Username"
+                    autocomplete="off"
+                    required
+                    autofocus
+                  />
+                  <mat-error *ngIf="usernameControl.hasError('required')">
+                    {{ usernameControl.getError("requiredMessage") }}</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div layout="row">
+                <mat-form-field flex>
+                  <input
+                    matInput
+                    formControlName="password"
+                    class="text-input"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="off"
+                    required
+                  />
+                  <mat-error *ngIf="passwordControl.hasError('required')">
+                    {{ passwordControl.getError("requiredMessage") }}</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <div fxLayout="row" layout-align="end center" flex="100">
+                <!-- <mat-checkbox [(formControl)]="rememberMeControl" name="rememberMe">Remember me</mat-checkbox> -->
+                <button
+                  type="button"
+                  [routerLink]="['/register']"
+                  mat-button
+                  color="primary"
+                >
+                  Register
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="!(usernameControl.valid && passwordControl.valid)"
+                  mat-button
+                  color="accent"
+                >
+                  Sign In
+                </button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

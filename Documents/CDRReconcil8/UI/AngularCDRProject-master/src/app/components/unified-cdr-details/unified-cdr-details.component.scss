@@ -1,0 +1,48 @@
+.material-icons.green {
+  color: green;
+}
+tr:hover {
+  background-color: rgb(175, 209, 241);
+}
+table {
+  width: 100%;
+  text-align: center !important;
+  overflow: auto;
+  th {
+    // background-color: #4caf50;
+    background-color: rgb(120, 133, 202);
+    color: white;
+    font-family: Times New Roman bold;
+    font-size: 16px;
+  }
+  th,
+  tr {
+    min-width: 120px;
+  }
+  // tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
+}
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: rgb(211, 243, 162);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+tbody {
+  overflow: scroll;
+}

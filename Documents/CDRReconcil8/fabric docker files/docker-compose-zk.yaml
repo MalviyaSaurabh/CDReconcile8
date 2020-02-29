@@ -1,0 +1,53 @@
+version: '2'
+networks:
+  byfn:
+
+services:
+    zookeeper0.ispa.com:
+        image: hyperledger/fabric-zookeeper
+        restart: always
+        container_name: zookeeper0
+        environment:
+          - ZOO_MY_ID=1
+          - ZOO_SERVERS=server.1=zookeeper0.ispa.com:2888:3888 server.2=zookeeper1.ispa.com:2888:3888 server.3=zookeeper2.ispa.com:2888:3888
+        volumes:
+          - /apps/opt/bcdata/zk0/data:/data
+        ports:
+          - "2181:2181"
+          - "2888:2888"
+          - "3888:3888"
+        networks:
+          - byfn
+
+    zookeeper1.ispa.com:
+        image: hyperledger/fabric-zookeeper
+        restart: always
+        container_name: zookeeper1
+        environment:
+          - ZOO_MY_ID=2
+          - ZOO_SERVERS=server.1=zookeeper0.ispa.com:2888:3888 server.2=zookeeper1.ispa.com:2888:3888 server.3=zookeeper2.ispa.com:2888:3888
+        volumes:
+          - /apps/opt/bcdata/zk1/data:/data
+        ports:
+          - "2182:2181"
+          - "2889:2888"
+          - "3889:3888"
+        networks:
+          - byfn
+
+    zookeeper2.ispa.com:
+        image: hyperledger/fabric-zookeeper
+        restart: always
+        container_name: zookeeper2
+        environment:
+          - ZOO_MY_ID=3
+          - ZOO_SERVERS=server.1=zookeeper0.ispa.com:2888:3888 server.2=zookeeper1.ispa.com:2888:3888 server.3=zookeeper2.ispa.com:2888:3888
+        volumes:
+          - /apps/opt/bcdata/zk2/data:/data
+        ports:
+          - "2183:2181"
+          - "2890:2888"
+          - "3890:3888"
+        networks:
+          - byfn
+

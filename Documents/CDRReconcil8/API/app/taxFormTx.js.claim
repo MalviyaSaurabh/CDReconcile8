@@ -1,0 +1,283 @@
+
+'use strict';
+var path = require('path');
+var helper = require('./helper.js');
+var logger = helper.getLogger('taxFormTx');
+var invoke = require('./invoke-transaction.js');
+
+//const mime = require('mime-types');
+//const crypto = require('crypto');
+
+var fs = require("fs");
+const uuidv4 = require('uuid/v4');
+//const base64 = require('base-64')
+
+
+var taxForm = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+   // logger.debug(">>> taxForm() ...");
+    res.set('Content-Type', 'application/json');
+	// res.set('Accept', 'application/json');
+	
+	
+ // **** To get file from local filesystem *********************************
+	
+	
+	//let imageName = args.doc.docName
+	
+	//var bitmap = fs.readFileSync( __dirname + '/../uploads/'+imageName);
+    // convert binary data to base64 encoded string
+   // var pdf_encode = new Buffer(bitmap).toString('base64');
+	//args.doc.docData = pdf_encode
+	//console.log(args.doc.docData)
+	
+	
+//**************************************************************************	
+	
+	//*******************************************
+	
+	args.taxDocId = uuidv4().toString();
+	args.doc.docID = uuidv4().toString();
+	
+	
+	//*********************************
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.taxDocId);
+	 jsonArr.push(args.taxType);
+	 jsonArr.push(args.taxState);
+	 jsonArr.push(args.taxCountry);
+	 jsonArr.push(args.taxJurisdiction);
+	 jsonArr.push(args.effectDate);
+	 jsonArr.push(args.expDate);
+	 jsonArr.push(args.createDate);
+	 jsonArr.push(args.updateDate);
+	 jsonArr.push(args.docStatus);
+	 jsonArr.push(args.docOwner);
+	 jsonArr.push(args.docIssuerComp);
+	 jsonArr.push(args.partner);
+	 jsonArr.push(args.partnerApprover);
+	 jsonArr.push(args.expReminder);
+	 jsonArr.push(args.certExempType);
+	 jsonArr.push(args.certName);
+	 jsonArr.push(JSON.stringify(args.accountList));
+	 jsonArr.push(JSON.stringify(args.doc));
+	 //console.log(jsonArr);
+	
+	//***************************************
+	
+   
+   
+   
+ // ***************** To encrypt base-64 string ***************************  
+ 
+	//let base64Image = item.docImage
+   // item.docOwner = username;
+   // item.aesKey = crypto.randomBytes(32).toString('base64');
+    //item.docImage = helper.encrypt(base64Image, item.aesKey);
+ //**************************************************************************
+
+ 
+   
+    //logger.debug(">>> taxForm() : args: %s", jsonArr);
+	let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+
+    if (data) {	
+		
+		//let result = data
+        let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return result;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	
+	 // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    
+}
+
+var account = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	
+	args.acctId = uuidv4().toString();
+	
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.acctId);
+	 jsonArr.push(args.ban);
+	 jsonArr.push(args.acctStatus);
+	 jsonArr.push(args.billName);
+	 jsonArr.push(args.acna);
+	 jsonArr.push(args.aecn);
+	 jsonArr.push(args.rsId);
+	 jsonArr.push(args.naspId);
+	 jsonArr.push(args.can);
+	 jsonArr.push(args.state);
+	 jsonArr.push(args.billingSys);
+	 jsonArr.push(args.prodGrpName);
+	 jsonArr.push(args.srvcTyp);
+	 jsonArr.push(args.lob);
+	 jsonArr.push(args.segment);
+	 jsonArr.push(args.creationDate);
+	 jsonArr.push(args.updateDate);
+	 jsonArr.push(args.taxExemptAcctType);
+	 jsonArr.push(args.taxExemptAcctVal);
+	 jsonArr.push(args.prtnrId);
+	 jsonArr.push(args.prtnrCode);
+	 jsonArr.push(args.prtnrName);
+	 jsonArr.push(args.fgId);
+	 jsonArr.push(args.fgCode);
+	 jsonArr.push(args.fgName);
+	 
+	 let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+       // let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+}
+
+var invoice = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.billId);
+	 jsonArr.push(args.billNum);
+	 jsonArr.push(args.ban);
+	 jsonArr.push(args.billDate);
+	 jsonArr.push(args.numOfCkts);
+	 jsonArr.push(args.numOfOCCs);
+	 jsonArr.push(args.billingSys);
+	 jsonArr.push(args.totCurrCharges);
+	 jsonArr.push(args.totTaxCharges);
+	 jsonArr.push(args.totSurcharges);
+	 jsonArr.push(args.totUsageCharges);
+	 jsonArr.push(args.totOCCCharges);
+	 jsonArr.push(args.totLPCCharges);
+	 jsonArr.push(args.totMonthlyCharges);
+	 jsonArr.push(args.totPayment);
+	 jsonArr.push(args.totAdj);
+	 jsonArr.push(args.totDebitAdj);
+	 jsonArr.push(args.totBalanceDue);
+	 jsonArr.push(args.typeOfBill);
+	 jsonArr.push(JSON.stringify(args.taxSurList));
+	 
+	 let data = await invoke.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+        //let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+}
+
+/* ------------------------------------------ To upload Claims ---------------------------------- */
+
+/* var claim = async function (peerNames, channelName, chaincodeName, args,fcn, username, org_name, res) {
+	
+	res.set('Content-Type', 'application/json');
+	let jsonArr = [];
+	 
+	 jsonArr.push(args.claimID);
+	 jsonArr.push(args.claimDate);
+	 jsonArr.push(args.ban);
+	 jsonArr.push(args.circuitID);
+	 jsonArr.push(args.billDateInDispute);
+	 jsonArr.push(args.claimType);
+	 jsonArr.push(args.billAmount);
+	 jsonArr.push(args.claimAmount);
+	 jsonArr.push(args.claimDescription);
+	 jsonArr.push(args.customerClaimNumber);
+	 jsonArr.push(args.customerAuditNumber);
+	 jsonArr.push(args.adjustmentSerialNumber);
+	 jsonArr.push(args.contractNumber);
+	 jsonArr.push(args.pon);
+	 jsonArr.push(args.verizonServiceOrderNumber);
+	 jsonArr.push(args.verizonTroubleTicketNumber);
+	 jsonArr.push(args.usoc);
+	 jsonArr.push(args.phraseCode);
+	 jsonArr.push(args.factorType);
+	 jsonArr.push(args.amountWithheld);
+	 jsonArr.push(args.billDateWithheld);
+	 jsonArr.push(args.taxID);
+	 jsonArr.push(args.taxType);
+	 jsonArr.push(args.contactName);
+	 jsonArr.push(args.contactEmail);
+	 jsonArr.push(args.contactPhone);
+	 jsonArr.push(args.contactExtension);
+	 jsonArr.push(args.claimNumber);
+	 jsonArr.push(args.claimStatus);
+	 jsonArr.push(args.submittedByVZ);
+	 jsonArr.push(args.prtnrName);
+	 jsonArr.push(args.batchID);
+	 jsonArr.push(JSON.stringify(args.subClaimList));
+	 jsonArr.push(args.totalApprovedAmount);
+	 jsonArr.push(args.totalDeniedAmount);
+	 
+	 let data = await claim.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+		//let result = data
+        //let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+} */
+
+var claim = async function (peerNames, channelName, chaincodeName, claimItem, username, org_name, res) {
+    logger.debug(">>> saveclaim() ...");
+    res.set('Content-Type', 'application/json');
+
+    let jsonArr = [];
+
+    claimItem.claimID = uuidv4().toString();
+	jsonArr.push(claimItem.claimID);
+    jsonArr.push(JSON.stringify(claimItem));
+	
+	let data = await claim.invokeChaincode(peerNames, channelName, chaincodeName, jsonArr, fcn, username, org_name);
+	 
+	 
+	 if (data) {	
+	
+        //let result = JSON.parse(data);
+		
+       // result.docImage = helper.decrypt(result.docImage, result.aesKey);
+        return data;
+			
+    } else {
+        return 'Failed to invoke the transaction ! check the logs for the details';
+    }
+	 
+} 
+
+
+exports.taxForm = taxForm;
+exports.account=account;
+exports.invoice=invoice;
+exports.claim=claim;

@@ -1,0 +1,107 @@
+<div fxLayout="row" style="width: 100%" fxFlex>
+  <div fxLayout="column" fxFlex="100">
+    <mat-card fxLayout="row" fxFlex="100">
+      <mat-card-content fxLayout="column" fxFlex="100">
+        <div class="md-padding" fxLayout="row" fxLayoutAlign="center center">
+          <div fxFlex style="width:100%;overflow-x: auto;">
+            <mat-card>
+              <mat-toolbar class="toolbar">
+                <mat-toolbar-row fxFlex>
+                  <div fxLayout="row" fxFlex>
+                    <div fxLayoutAlign="start center" fxFlex>
+                      CDR Details
+                    </div>
+                    <div fxLayoutAlign="end center" fxFlex>
+                      <span>
+                        <button mat-stroked-button (click)="addDialog()">
+                          Upload CDR
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </mat-toolbar-row>
+              </mat-toolbar>
+              <mat-divider></mat-divider>
+              <mat-card-content>
+                <div
+                  class="mat-elevation-z8"
+                  style="overflow:auto"
+                  fxLayout="column"
+                  fxFlex
+                >
+                  <div fxLayout="row">
+                    <table
+                      title="CDR Summary"
+                      mat-table
+                      [dataSource]="dataSource"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <!-- THe table will be added here -->
+                      <ng-container matColumnDef="action" class="select-column">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          class="select-column"
+                        ></th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="select-column"
+                        >
+                          <button mat-icon-button (click)="viewData(element)">
+                            <mat-icon class="material-icons md-24"
+                              >visibility</mat-icon
+                            >
+                          </button>
+                        </td>
+                      </ng-container>
+                      <ng-container
+                        matColumnDef="{{ column }}"
+                        *ngFor="let column of displayedColumns"
+                      >
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          mat-sort-header
+                          class="mat-header-class"
+                        >
+                          {{ displayNames[column] }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          class="mat-element-class"
+                        >
+                          {{ element[column] }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="allDisplayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: allDisplayedColumns"
+                        (click)="selection.toggle(row)"
+                      ></tr>
+                    </table>
+                  </div>
+                  <div fxFlex="row"></div>
+                </div>
+              </mat-card-content>
+              <mat-paginator
+                [length]="length"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="pageEvent = $event"
+              >
+              </mat-paginator>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<mat-toolbar style="background-color: #f0f0f0;">
+  <mat-toolbar-row style="margin-left: 0px;">
+    <img src="../../../assets/cdreconcile8.png" class="titleImage" />
+
+    <span class="example-spacer"></span>
+    <span class="example-icon">Welcome OperatorA</span>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/login']">
+        <!-- <mat-icon><img src="/src/assets/logout.png"/></mat-icon> -->
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+  <mat-toolbar-row style="margin-bottom: 0px;">
+    <span></span>
+    <span class="example-spacer"></span>
+    <button class="example-icon" [routerLink]="['/home/summary']">
+      Summary
+    </button>
+    <button class="example-icon" [routerLink]="['/home/dashboard']">
+      Home
+    </button>
+    <button class="example-icon" [routerLink]="['/home/listCDRDetails']">
+      List CDR
+    </button>
+    <button class="example-icon" [routerLink]="['/home/unifiedCDRDetails']">
+      Unified CDR
+    </button>
+    <button class="example-icon" [routerLink]="['/home/invoiceDetails']">
+      Invoice
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div style="background-color: #F8F8F8;">
+  <router-outlet></router-outlet>
+</div>

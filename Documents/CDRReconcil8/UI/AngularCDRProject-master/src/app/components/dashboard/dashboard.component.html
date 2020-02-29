@@ -1,0 +1,101 @@
+<div fxLayout="column" fxLayout-align="center center" fxFlex="100">
+  <!-- layout-wrap -->
+  <div style="height:200px;margin-bottom: 0%">
+    <mat-card>
+      <mat-card-title class="example-icon">DashBoard</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div fxLayout="row" fxFlex>
+          <div
+            [routerLink]="['/home/listCDRDetails']"
+            fxLayout="column"
+            fxFlex="12"
+            g
+            style="max-height:120px"
+          >
+            <mat-card>
+              <mat-card-content style="text-align: center">
+                <div>
+                  <img
+                    class="dashBoardImage"
+                    mat-card-image
+                    src="../../../assets/listCDR.jpg"
+                  />
+                </div>
+                <br />
+                <a></a><br />
+                <a></a><br />
+                <a>List CDR</a>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div fxLayout="column" fxFlex="2"></div>
+          <div
+            [routerLink]="['/home/invoiceDetails']"
+            fxLayout="column"
+            fxFlex="12"
+          >
+            <mat-card>
+              <mat-card-content style="text-align: center">
+                <div>
+                  <img
+                    class="dashBoardImage"
+                    mat-card-image
+                    src="../../../assets/invoice_48.png"
+                  />
+                </div>
+                <br />
+                <a></a><br />
+                <a></a><br />
+                <a>Invoices</a>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" fxFlex="2"></div>
+          <div
+            [routerLink]="['/home/unifiedCDRDetails']"
+            fxLayout="column"
+            fxFlex="12"
+          >
+            <mat-card>
+              <mat-card-content style="text-align: center">
+                <div>
+                  <img
+                    class="dashBoardImage"
+                    mat-card-image
+                    src="../../../assets/unifiedCDR.png"
+                  />
+                </div>
+                <br />
+                <a></a><br />
+                <a></a><br />
+
+                <a>UnifiedCDR Details</a>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" fxFlex="2"></div>
+          <div [routerLink]="['/home/search']" fxLayout="column" fxFlex="12">
+            <mat-card>
+              <mat-card-content style="text-align: center">
+                <div>
+                  <img
+                    class="dashBoardImage"
+                    mat-card-image
+                    src="../../../assets/search_48.png"
+                  />
+                </div>
+                <br />
+                <a></a><br />
+                <a>Quick</a><br />
+                <a>Search</a>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" fxFlex="2"></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

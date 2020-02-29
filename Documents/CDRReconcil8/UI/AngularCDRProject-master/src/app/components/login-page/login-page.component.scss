@@ -1,0 +1,50 @@
+:host /deep/ {
+  md-divider {
+    display: block;
+    border-top-style: solid;
+    border-top-width: 1px;
+  }
+}
+
+.authFailureBlockContainer {
+  background-color: #ef9a9a;
+}
+
+.authHeader {
+  font-size: 2rem;
+}
+
+.title-center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.title-font {
+  font-size: 200%;
+  color: rgb(255, 255, 255);
+}
+
+.authFailureMessage {
+  font-size: 1.64rem;
+  line-height: 110%;
+  font-weight: 400;
+}
+
+.toolbar {
+  height: 20vh;
+  background: rgb(53, 42, 42);
+}
+
+.mat-checkbox-inner-container {
+  height: 12px;
+  width: 12px;
+}
+.center {
+  // display: block;
+  // margin-left: auto;
+  // margin-right: auto;
+  margin-left: 0px;
+  width: 200px;
+  height: 50px;
+  margin-bottom: 0px;
+}

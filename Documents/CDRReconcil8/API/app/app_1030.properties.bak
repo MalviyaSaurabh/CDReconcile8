@@ -1,0 +1,52 @@
+[couchdb]
+# Database connection to couchdb
+host=http://10.70.140.12
+database=vzctlchannel_wholesaleclaims
+port=7984
+
+[ACCOUNT]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"ACCOUNT"},"fields":["acctId"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+[INVOICE]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"INVOICE"},"fields":["invoiceBAN"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+[CLAIM]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"CLAIM"},"fields":["claimID"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+[BATCHINFO]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"BATCHINFO"},"fields":["batchID"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+[TAX FORM]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"TAX FORM"},"fields":["taxDocId"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+[TAX_EXEMPT_CERTIFICATE]
+TILES=["assetTiles1","assetTiles2","assetTiles3","assetTiles4"]
+assetTiles1={"selector":{"docType":"TAX_EXEMPT_CERTIFICATE"},"fields":["identity"],"limit": 100000}
+assetTiles2=progress
+assetTiles3=progress
+assetTiles4=progress
+
+
+
+
+

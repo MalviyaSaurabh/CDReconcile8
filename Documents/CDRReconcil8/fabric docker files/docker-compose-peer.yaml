@@ -1,0 +1,21 @@
+version: '2'
+
+networks:
+  byfn:
+
+services:
+  peer0.ispa.com:
+    container_name: peer0.ispa.com
+    extends:
+      file:  base/docker-compose-base-peer.yaml
+      service: peer0.ispa.com
+    networks:
+      - byfn
+
+  peer1.ispa.com:
+    container_name: peer1.ispa.com
+    extends:
+      file:  base/docker-compose-base-peer.yaml
+      service: peer1.ispa.com
+    networks:
+      - byfn

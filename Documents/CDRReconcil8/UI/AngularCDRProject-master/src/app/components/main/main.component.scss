@@ -1,0 +1,26 @@
+.example-icon {
+  text-transform: uppercase;
+  font-size: 0.5em;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #999;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+
+  border: none;
+  background: none;
+}
+
+.titleImage {
+  width: 300px;
+  height: 180px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

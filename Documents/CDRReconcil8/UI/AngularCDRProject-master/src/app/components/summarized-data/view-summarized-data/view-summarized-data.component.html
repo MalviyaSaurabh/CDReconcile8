@@ -1,0 +1,153 @@
+<div fxLayout="row">
+  <div fxLayout="column" fxFlex="95">
+    <mat-card fxFlex>
+      <mat-card-title
+        ><span
+          style="font-family:'Times New Roman', Times, serif;font-size:24px;font-weight: bold"
+        >
+          CDR ID : {{ this.cdrId }}</span
+        ></mat-card-title
+      >
+      <mat-divider></mat-divider>
+    </mat-card>
+  </div>
+
+  <div fxLayout="column" fxFlex="5">
+    <mat-icon class="material-icons md-36 " style="color:red" (click)="cancel()"
+      >cancel</mat-icon
+    >
+  </div>
+</div>
+
+<div style="margin-top:20px;">
+  <div fxLayout="column">
+    <div fxLayout="row" fxFlex="100">
+      <div fxLayout="column" fxFlex="50">
+        <mat-card>
+          <mat-card-content style="margin: 0">
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">CDR Id:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.cdrId }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Origin ISP:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.originIsp }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Destination ISP:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.destinationIsp }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Source Number:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.sourceNumber }}</p>
+              </div>
+            </div>
+
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Destination Number:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.destinationNumber }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Origin Code:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.originCode }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Destination Code:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.destinationCode }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div fxLayout="column" fxFlex="50">
+        <mat-card>
+          <mat-card-content>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Switch Id :</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.switchId }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Origination Time:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.originationTime }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Termination Time:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.terminationTime }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Timezone Offset From GMT:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.timezoneUTC }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Rating Level:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.rating_level }}</p>
+              </div>
+            </div>
+
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Call Duration:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.callDuration }}</p>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="info-display-left">
+                <p class="dataCSS">Call Status:</p>
+              </div>
+              <div class="info-display-right">
+                <p class="dataCSS">{{ this.callStatus }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
